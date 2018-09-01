@@ -1,0 +1,41 @@
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://kadan1:8761/eureka/
+    registry-fetch-interval-seconds: 30
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+    enableSelfPreservation: false
+
+  instance:
+    hostname: kadan2
+
+kafka:
+  producer:
+    servers: kadan1:9092 #,10.1.11.4:9093
+    retries: 2
+    batch:
+      size: 4096
+    linger: 1
+    buffer:
+      memory: 4096
+  consumer:
+    enable:
+      auto:
+        commit: true
+    auto:
+      commit:
+        interval: 100
+      offset:
+        reset: latest
+    zookeeper:
+      connect:  kadan2:2181
+    servers: kadan2:9093
+    session:
+      timeout: 6000
+      topic: TestTopic
+    group:
+      id: test
+    concurrency:  10
